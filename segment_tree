@@ -1,0 +1,23 @@
+//segment tree code for minimum element in range
+vector<int>segt(1e6,INT_MAX);
+void update(int ind,int left,int right,int start, int end,int val){
+	if(left>end or right<start or start>end)return;
+	if(left<=start and right>=end){
+		segt[ind]=val;
+		return;
+	}
+	int mid=start+(end-start)/2;
+	update(2*ind,left,right,start,mid,val);
+	update(2*ind+1,left,right,mid+1,end,val);
+	segt[ind]=min(segt[2*ind],segt[2*ind+1]);
+
+
+}
+int query(int ind,int left,int right,int start ,int end){
+	if(left>end or right<start or start>end)return 1e9;
+	if(left<=start and right>=end)return segt[ind];
+	int mid=start+(end-start)/2;
+	int v1=query(2*ind,left,right,start,mid);
+	int v2=query(2*ind+1,left,right,mid+1,end);
+	return min(v1,v2);
+}
