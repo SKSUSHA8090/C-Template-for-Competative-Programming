@@ -1,0 +1,21 @@
+//fenwick tree code for sum
+int MAX_N=1e5;
+int n;
+vector<ll>ft(MAX_N,0);
+void fupdate(int x,int v){
+	for(;x<=n;x+=(x&(-x))){
+		ft[x]+=v;
+	}
+}
+
+ll fsum(int x){
+	ll res=0;
+	for(;x;x-=(x&(-x))){
+		res+=ft[x];
+	}
+	return res;
+}
+
+ll fquery(int l,int r){
+	return fsum(r)-fsum(l-1);
+}
